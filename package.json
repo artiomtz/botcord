@@ -1,0 +1,19 @@
+{
+  "name": "botcord",
+  "version": "1.0.0",
+  "description": "A Discord bot that shares posts via apis.",
+  "main": "src/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "dev": "nodemon src/index.js"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^1.6.2",
+    "discord.js": "^14.14.1",
+    "dotenv": "^16.3.1",
+    "node-cron": "^3.0.3",
+    "nodemon": "^3.0.1"
+  }
+}
