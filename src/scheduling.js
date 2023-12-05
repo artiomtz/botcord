@@ -8,7 +8,7 @@ function schedulePosts() {
   const postingCycle =
     parseInt(config.minDaysGap) + Math.ceil(1 / config.postProbability);
   console.log(
-    `Scheduling to run roughly every ${config.minDaysGap} to ${postingCycle} days, around ${config.startHour}:00 to ${config.endHour}:00.`
+    `✅ Scheduling to run roughly every ${config.minDaysGap} to ${postingCycle} days, around ${config.startHour}:00 to ${config.endHour}:00.`
   );
 
   let postingInterval = `0 ${config.startHour} * * *`;
@@ -20,19 +20,19 @@ function schedulePosts() {
     cron.schedule(postingInterval, () => {
       if (shouldPost()) {
         const randomDelay = getRandomDelay();
-        console.log(`Posting in ${randomDelay / (1000 * 60)} minutes...`);
+        console.log(`✅ Posting in ${randomDelay / (1000 * 60)} minutes...`);
         setTimeout(async () => {
           const data = await fetchData();
           post(data);
           lastPostDate = new Date();
         }, randomDelay);
       } else {
-        console.log("Not posting today.");
+        console.log("☑️ Not posting today.");
       }
     });
     return true;
   } catch (error) {
-    console.error("Couldn't schedule posts.");
+    console.error("⛔ Couldn't schedule posts.");
     return false;
   }
 }

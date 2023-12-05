@@ -5,7 +5,7 @@ async function fetchData() {
   const apis = JSON.parse(config.apis);
   const selectedApiIndex = Math.floor(Math.random() * apis.length);
   const selectedApi = apis[selectedApiIndex];
-  console.log(`Fetching data from ${selectedApi.url}`);
+  console.log(`☑️ Fetching data from ${selectedApi.url}`);
 
   try {
     const response = await axios.get(
@@ -16,14 +16,14 @@ async function fetchData() {
     const data = extractData(response.data, selectedApi.field);
 
     if (data) {
-      console.log(`Fetched data: ${data}`);
+      console.log(`✅ Fetched data: ${data}`);
       return data;
     } else {
-      console.error("Failed to extract data from the API response.");
+      console.error("❌ Failed to extract data from the API response.");
       return null;
     }
   } catch (error) {
-    console.error("Error fetching posts.");
+    console.error("⛔ Error fetching posts.");
   }
 }
 

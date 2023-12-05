@@ -5,7 +5,7 @@ async function greeting() {
   const greetingMessages = JSON.parse(config.greetingMsgs);
 
   if (greetingMessages.length === 0) {
-    console.log("No greeting messages.");
+    console.log("☑️ No greeting messages.");
     return;
   }
 
