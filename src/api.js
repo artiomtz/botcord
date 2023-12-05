@@ -16,7 +16,7 @@ async function fetchData() {
     const data = extractData(response.data, selectedApi.field);
 
     if (data) {
-      console.log(`Received data: ${data}`);
+      console.log(`Fetched data: ${data}`);
       return data;
     } else {
       console.error("Failed to extract data from the API response.");
