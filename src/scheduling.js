@@ -1,7 +1,7 @@
-const config = require("./config");
 const cron = require("node-cron");
+const config = require("./config");
 const { fetchData } = require("./api");
-const { post } = require("./discord");
+const { post } = require("./posting");
 let lastPostDate = null;
 
 function schedulePosts() {

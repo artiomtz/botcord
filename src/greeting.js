@@ -1,5 +1,5 @@
 const config = require("./config");
-const { post } = require("./discord");
+const { post } = require("./posting");
 
 async function greeting() {
   const greetingMessages = JSON.parse(config.greetingMsgs);

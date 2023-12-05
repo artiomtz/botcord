@@ -1,5 +1,5 @@
-const config = require("./config");
 const axios = require("axios");
+const config = require("./config");
 
 async function fetchData() {
   const apis = JSON.parse(config.apis);
@@ -16,7 +16,7 @@ async function fetchData() {
     const data = extractData(response.data, selectedApi.field);
 
     if (data) {
-      console.log(`✅ Fetched data: ${data}`);
+      console.log(`✅ Fetched data:\n${data}`);
       return data;
     } else {
       console.error("❌ Failed to extract data from the API response.");
