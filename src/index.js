@@ -17,7 +17,8 @@ async function main() {
     console.error("❌ Shutting down.");
     return;
   } else {
-    greeting();
+    console.log("☑️ Posting greeting...");
+    await greeting();
   }
 
   console.log("☑️ Scheduling posts...");

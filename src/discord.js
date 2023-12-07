@@ -9,6 +9,7 @@ const client = new Client({
     IntentsBitField.Flags.GuildMembers,
     IntentsBitField.Flags.GuildMessages,
     IntentsBitField.Flags.MessageContent,
+    IntentsBitField.Flags.GuildVoiceStates,
   ],
 });
 
@@ -20,7 +21,6 @@ async function login() {
         console.log(`✅ Logged in as ${c.user.tag}`);
 
         const channel = findChannelByName(client, config.discordChannelName);
-        console.log(`...... ${channel}`);
         if (channel) {
           setResponses(client);
           resolve(true);

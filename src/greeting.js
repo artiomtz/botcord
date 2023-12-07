@@ -1,5 +1,5 @@
 const config = require("./config");
-const { post } = require("./posting");
+const { post, sleep } = require("./posting");
 
 async function greeting() {
   const greetingMessages = JSON.parse(config.greetingMsgs);
@@ -13,10 +13,6 @@ async function greeting() {
     post(greetingMsg);
     await sleep(config.delay);
   }
-}
-
-function sleep(ms) {
-  return new Promise((resolve) => setTimeout(resolve, ms));
 }
 
 module.exports = {

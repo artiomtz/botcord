@@ -14,7 +14,12 @@ function post(msg) {
   }
 }
 
+function sleep(ms) {
+  return new Promise((resolve) => setTimeout(resolve, ms));
+}
+
 module.exports = {
   post,
+  sleep,
   findChannelByName,
 };
