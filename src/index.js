@@ -1,8 +1,9 @@
 const express = require("express");
 const config = require("./config");
-const { login, post } = require("./discord");
+const { login } = require("./discord");
 const { greeting } = require("./greeting");
 const { schedulePosts } = require("./scheduling");
+const { post } = require("./posting");
 
 const app = express();
 app.use(express.json());
