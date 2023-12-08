@@ -1,5 +1,6 @@
 const config = require("./config");
 const { post, sleep } = require("./posting");
+const { notify } = require("./notifying");
 
 function setResponses(client) {
   client.on("messageCreate", async (msg) => {
@@ -55,15 +56,29 @@ function setResponses(client) {
           `▶️ ${member.user.tag} joined voice channel '${newState.channel.name}' at ${timestamp}`
         );
 
-        if (Math.random() > config.replyProbability) {
-          return;
-        }
         const membersCount = newState.channel.members.size;
-
         if (config.env === "dev" || membersCount > 1) {
+          try {
+            console.log("☑️ Notifying...");
+            const voiceChannel = newState.guild.channels.cache.get(
+              newState.channelId
+            );
+
+            const members = voiceChannel.members.map(
+              (member) => member.user.username
+            );
+            notify(timestamp, members);
+          } catch {
+            console.error("⛔ Error notifying.");
+          }
+
+          if (Math.random() > config.replyProbability) {
+            return;
+          }
           replies = JSON.parse(config.voiceChatReply);
           const randomVoiceChatReply =
             replies[Math.floor(Math.random() * replies.length)];
+
           await sleep(config.delay);
           post(randomVoiceChatReply);
         }
@@ -71,6 +86,7 @@ function setResponses(client) {
         console.log(
           `▶️ ${member.user.tag} left voice channel '${oldState.channel.name}' at ${timestamp}`
         );
+        notify(timestamp, null);
       }
     }
   });

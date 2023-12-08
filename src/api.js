@@ -9,7 +9,10 @@ async function fetchData() {
       const selectedApiIndex = Math.floor(Math.random() * apis.length);
       const selectedApi = apis[selectedApiIndex];
 
-      console.log(`☑️ Fetching data from API.`);
+      config.env === "dev"
+        ? console.log(`☑️ Fetching data from API: ${selectedApi.url}`)
+        : console.log(`☑️ Fetching data from API.`);
+
       const response = await axios.get(selectedApi.url);
       if (response.status != 200) {
         console.error("❌ API call failed.");

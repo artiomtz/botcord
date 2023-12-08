@@ -19,13 +19,16 @@ module.exports = {
   cdnUrl: process.env.CDN_URL,
   apiOverCdn: process.env.API_OVER_CDN_PROBABILITY,
 
-  greetingMsgs: process.env.GREETING_MSGS,
+  notificationKey: process.env.NOTIFICATION_KEY,
+  notificationEmail: process.env.NOTIFICATION_EMAIL,
+  notificationSubject: process.env.NOTIFICATION_SUBJECT,
 
   minDaysGap: process.env.MIN_DAYS_GAP,
   postProbability: process.env.POST_PROBABILITY,
   startHour: process.env.START_HOUR,
   endHour: process.env.END_HOUR,
 
+  greetingMsgs: process.env.GREETING_MSGS,
   friends: process.env.FRIENDS,
   keyWords: process.env.KEY_WORDS,
   keyWordsReply: process.env.KEY_WORDS_REPLY,
