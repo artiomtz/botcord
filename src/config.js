@@ -7,9 +7,19 @@ module.exports = {
   discordToken: process.env.DISCORD_TOKEN,
   discordChannelName: process.env.DISCORD_CHANNEL_NAME,
 
-  greetingMsgs: process.env.GREETING_MSGS,
+  cdnCloudName: process.env.CDN_CLOUD_NAME,
+  cdnApiKey: process.env.CDN_API_KEY,
+  cdnApiSecret: process.env.CDN_API_SECRET,
+  cdnDir: process.env.CDN_DIR,
+  cdnNumImages: process.env.CDN_NUM_IMAGES,
+  cdnLocalDir: process.env.CDN_LOCAL_DIR,
+  cdnPhotoName: process.env.CDN_PHOTO_NAME,
 
   apis: process.env.APIS,
+  cdnUrl: process.env.CDN_URL,
+  apiOverCdn: process.env.API_OVER_CDN_PROBABILITY,
+
+  greetingMsgs: process.env.GREETING_MSGS,
 
   minDaysGap: process.env.MIN_DAYS_GAP,
   postProbability: process.env.POST_PROBABILITY,

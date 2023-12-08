@@ -5,9 +5,10 @@ function findChannelByName(client, channelName) {
   return channel;
 }
 
-function post(msg) {
+function post(content) {
   try {
-    channel.send(String(msg));
+    content = typeof content === "number" ? String(content) : content;
+    channel.send(content);
     console.log(`✅ Message posted.`);
   } catch {
     console.error("⛔ Error while posting to channel.");

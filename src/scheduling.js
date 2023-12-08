@@ -23,7 +23,12 @@ function schedulePosts() {
         console.log(`✅ Posting in ${randomDelay / (1000 * 60)} minutes...`);
         setTimeout(async () => {
           const data = await fetchData();
-          post(data);
+          if (data) {
+            console.log(`☑️ Posting...`);
+            post(data);
+          } else {
+            console.error("❌ Couldn't post.");
+          }
           lastPostDate = new Date();
         }, randomDelay);
       } else {
@@ -31,7 +36,7 @@ function schedulePosts() {
       }
     });
     return true;
-  } catch (error) {
+  } catch {
     console.error("⛔ Couldn't schedule posts.");
     return false;
   }
