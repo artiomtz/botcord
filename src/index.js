@@ -1,6 +1,6 @@
 const express = require("express");
 const config = require("./config");
-const { login } = require("./discord");
+const { login, disconnect } = require("./discord");
 const { greeting } = require("./greeting");
 const { schedulePosts } = require("./scheduling");
 const { post } = require("./posting");
@@ -48,6 +48,16 @@ app.post("/post", (req, res) => {
     console.error("⛔ Error processing POST request");
     res.status(500).json({ message: "Couldn't post text." });
   }
+});
+
+process.on("SIGTERM", () => {
+  disconnect();
+  process.exit(0);
+});
+
+process.on("SIGINT", () => {
+  disconnect();
+  process.exit(0);
 });
 
 main();

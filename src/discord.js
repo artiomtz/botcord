@@ -36,6 +36,18 @@ async function login() {
   }
 }
 
+async function disconnect() {
+  console.log("☑️ Exiting...");
+
+  try {
+    await client.destroy();
+    console.log("✅ Shutting Down...");
+  } catch (error) {
+    console.error(`⛔ Error during shutdown.`);
+  }
+}
+
 module.exports = {
   login,
+  disconnect,
 };
