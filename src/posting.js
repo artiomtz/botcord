@@ -10,8 +10,10 @@ function post(content) {
     content = typeof content === "number" ? String(content) : content;
     channel.send(content);
     console.log(`✅ Message posted.`);
+    return true;
   } catch {
     console.error("⛔ Error while posting to channel.");
+    return false;
   }
 }
 

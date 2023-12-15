@@ -38,15 +38,19 @@ app.post("/post", (req, res) => {
     const { text } = req.body;
     if (text) {
       console.log(`☑️ Received text: ${text}`);
-      post(text);
-      res.status(200).json({ message: "Text posted successfully." });
+      const postSuccess = post(text);
+      if (postSuccess) {
+        res.status(200).json({ message: "✅ Text posted successfully." });
+      } else {
+        res.status(500).json({ message: "❌ Error while posting to channel." });
+      }
     } else {
       console.error("❌ Invalid request.");
-      res.status(400).json({ error: "Invalid request." });
+      res.status(400).json({ error: "❌ Invalid request." });
     }
   } catch {
-    console.error("⛔ Error processing POST request");
-    res.status(500).json({ message: "Couldn't post text." });
+    console.error("⛔ Error processing POST request.");
+    res.status(500).json({ message: "⛔ Error processing POST request." });
   }
 });
 
