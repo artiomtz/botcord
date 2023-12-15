@@ -2,7 +2,7 @@ require("dotenv").config();
 
 module.exports = {
   env: process.env.NODE_ENV == "production" ? "prod" : "dev",
-  port: process.env.APP_PORT,
+  port: process.env.PORT,
 
   discordToken: process.env.DISCORD_TOKEN,
   discordChannelName: process.env.DISCORD_CHANNEL_NAME,
