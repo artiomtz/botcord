@@ -86,7 +86,10 @@ function setResponses(client) {
         console.log(
           `▶️ ${member.user.tag} left voice channel '${oldState.channel.name}' at ${timestamp}`
         );
-        notify(timestamp, null);
+        if (config.env === "dev" || membersCount == 0) {
+          console.log("☑️ Notifying...");
+          notify(timestamp, null);
+        }
       }
     }
   });

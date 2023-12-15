@@ -16,6 +16,7 @@ const client = new Client({
 async function login() {
   try {
     await client.login(config.discordToken);
+    console.log("☑️ Connecting...");
     return new Promise((resolve) => {
       client.once("ready", (c) => {
         console.log(`✅ Logged in as ${c.user.tag}`);
