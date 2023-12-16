@@ -15,7 +15,6 @@ const client = new Client({
 
 async function login() {
   try {
-    await client.login(config.discordToken);
     console.log("☑️ Connecting...");
     return new Promise((resolve) => {
       client.once("ready", (c) => {
@@ -30,6 +29,7 @@ async function login() {
           resolve(false);
         }
       });
+      client.login(config.discordToken);
     });
   } catch {
     console.error("⛔ Couldn't connect to Discord.");
