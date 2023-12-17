@@ -15,6 +15,9 @@ module.exports = {
   cdnLocalDir: process.env.CDN_LOCAL_DIR,
   cdnPhotoName: process.env.CDN_PHOTO_NAME,
 
+  postHeader: process.env.POST_SECURITY_HEADER,
+  postKey: process.env.POST_SECURITY_KEY,
+
   apis: process.env.APIS,
   cdnUrl: process.env.CDN_URL,
   apiOverCdn: process.env.API_OVER_CDN_PROBABILITY,

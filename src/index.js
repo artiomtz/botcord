@@ -11,6 +11,15 @@ app.listen(config.port, () => {
   console.log(`✅ Server is listening on port ${config.port}.`);
 });
 
+const checkSecurityKey = (req, res, next) => {
+  if (req.headers[config.postHeader] === config.postKey) {
+    next();
+  } else {
+    console.error("⛔ Unauthorized.");
+    res.status(401).json({ error: "⛔ Unauthorized." });
+  }
+};
+
 async function main() {
   console.error("☑️ Attempting to connect to Discord...");
   const loginSuccess = await login();
@@ -33,7 +42,7 @@ async function main() {
   console.log("☑️ Running...");
 }
 
-app.post("/post", (req, res) => {
+app.post("/post", checkSecurityKey, (req, res) => {
   try {
     const { text } = req.body;
     if (text) {
@@ -42,7 +51,7 @@ app.post("/post", (req, res) => {
       if (postSuccess) {
         res.status(200).json({ message: "✅ Text posted successfully." });
       } else {
-        res.status(500).json({ message: "❌ Error while posting to channel." });
+        res.status(500).json({ error: "❌ Error while posting to channel." });
       }
     } else {
       console.error("❌ Invalid request.");
@@ -50,7 +59,7 @@ app.post("/post", (req, res) => {
     }
   } catch {
     console.error("⛔ Error processing POST request.");
-    res.status(500).json({ message: "⛔ Error processing POST request." });
+    res.status(500).json({ error: "⛔ Error processing POST request." });
   }
 });
 
