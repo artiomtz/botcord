@@ -83,6 +83,7 @@ function setResponses(client) {
           post(randomVoiceChatReply);
         }
       } else {
+        const membersCount = oldState.channel.members.size;
         console.log(
           `▶️ ${member.user.tag} left voice channel '${oldState.channel.name}' at ${timestamp}`
         );
