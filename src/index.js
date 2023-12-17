@@ -54,6 +54,11 @@ app.post("/post", (req, res) => {
   }
 });
 
+app.all("/", (req, res) => {
+  console.log("✅ Connected.");
+  res.status(200).json({ message: "✅ Connected." });
+});
+
 process.on("SIGTERM", () => {
   disconnect();
   process.exit(0);
