@@ -20,7 +20,9 @@ function schedulePosts() {
     cron.schedule(postingInterval, () => {
       if (shouldPost()) {
         const randomDelay = getRandomDelay();
-        console.log(`✅ Posting in ${randomDelay / (1000 * 60)} minutes...`);
+        console.log(
+          `✅ Posting in ${Math.round(randomDelay / (1000 * 60))} minutes...`
+        );
         setTimeout(async () => {
           const data = await fetchData();
           if (data) {
