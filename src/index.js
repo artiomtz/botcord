@@ -11,13 +11,13 @@ app.listen(config.port, () => {
 
 app.use(express.json());
 app.use((req, res, next) => {
-  const allowedUserAgent = JSON.parse(process.env.ALLOWED_AGENTS);
+  const allowedUserAgent = JSON.parse(config.allowedAgents);
   if (
     !req.headers[allowedUserAgent.field] ||
     !req.headers[allowedUserAgent.field].includes(allowedUserAgent.value)
   ) {
-    console.error("❌ Unauthorized access.");
-    return res.status(401).json({ error: "❌ Unauthorized access." });
+    console.error("⛔ Unauthorized access.");
+    return res.status(401).json({ error: "⛔ Unauthorized access." });
   }
   next();
 });
@@ -65,8 +65,9 @@ app.post("/post", checkSecurityKey, (req, res) => {
 
 app.all("/", async (req, res) => {
   console.log("✅ Received request.");
+  const doPost = await shouldPost();
 
-  if (shouldPost()) {
+  if (doPost) {
     const postData = await fetchData();
     if (!postData) {
       console.error("⛔ Couldn't fetch posts.");
@@ -83,8 +84,8 @@ app.all("/", async (req, res) => {
       res.status(500).json({ error: "⛔ Request failed." });
     }
   } else {
-    console.log("☑️ Not posting today.");
-    res.status(200).json({ message: "☑️ Not posting today." });
+    console.log("☑️ Not posting.");
+    res.status(200).json({ message: "☑️ Not posting." });
   }
 });
 

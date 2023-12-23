@@ -39,4 +39,6 @@ module.exports = {
   replyProbability: process.env.REPLY_PROBABILITY,
   replyMention: process.env.REPLY_MENTION,
   delay: process.env.POST_DELAY,
+
+  allowedAgents: process.env.ALLOWED_AGENTS,
 };

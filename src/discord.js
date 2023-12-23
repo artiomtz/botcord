@@ -41,8 +41,8 @@ async function disconnect() {
   try {
     await client.destroy();
     console.log("✅ Shutting Down...");
-  } catch (error) {
-    console.error(`⛔ Error during shutdown.`);
+  } catch {
+    console.error("⛔ Error during shutdown.");
   }
 }
 

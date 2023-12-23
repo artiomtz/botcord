@@ -11,7 +11,7 @@ async function fetchData() {
 
       config.env === "dev"
         ? console.log(`☑️ Fetching data from API: ${selectedApi.url}`)
-        : console.log(`☑️ Fetching data from API.`);
+        : console.log("☑️ Fetching data from API.");
 
       const response = await axios.get(selectedApi.url);
       if (response.status != 200) {
@@ -22,7 +22,7 @@ async function fetchData() {
     } else {
       const selectedCdnIndex = Math.floor(Math.random() * config.cdnNumImages);
       const cdnUrl = config.cdnUrl + selectedCdnIndex;
-      console.log(`☑️ Fetching data from CDN.`);
+      console.log("☑️ Fetching data from CDN.");
       data = {
         content: "",
         files: [
@@ -37,7 +37,7 @@ async function fetchData() {
     if (data) {
       typeof data === "string"
         ? console.log(`✅ Fetched data:\n${data}`)
-        : console.log(`✅ Data is ready to be posted.`);
+        : console.log("✅ Data is ready to be posted.");
       return data;
     } else {
       console.error("❌ Failed to extract data from the API response.");
