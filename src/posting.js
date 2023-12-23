@@ -1,3 +1,4 @@
+const config = require("./config");
 let channel = null;
 
 function findChannelByName(client, channelName) {
@@ -17,6 +18,18 @@ function post(content) {
   }
 }
 
+function shouldPost() {
+  if (config.env === "dev") {
+    return true;
+  }
+  const currentHour = new Date().getHours();
+
+  if (currentHour >= config.startHour && currentHour < config.endHour) {
+    return Math.random() < config.postProbability;
+  }
+  return false;
+}
+
 function sleep(ms) {
   return new Promise((resolve) => setTimeout(resolve, ms));
 }
@@ -24,5 +37,6 @@ function sleep(ms) {
 module.exports = {
   post,
   sleep,
+  shouldPost,
   findChannelByName,
 };

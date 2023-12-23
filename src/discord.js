@@ -15,7 +15,6 @@ const client = new Client({
 
 async function login() {
   try {
-    console.log("☑️ Connecting...");
     return new Promise((resolve) => {
       client.once("ready", (c) => {
         console.log(`✅ Logged in as ${c.user.tag}`);
@@ -39,7 +38,6 @@ async function login() {
 
 async function disconnect() {
   console.log("☑️ Exiting...");
-
   try {
     await client.destroy();
     console.log("✅ Shutting Down...");

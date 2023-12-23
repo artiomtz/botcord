@@ -1,46 +1,46 @@
 const express = require("express");
 const config = require("./config");
 const { login, disconnect } = require("./discord");
-const { greeting } = require("./greeting");
-const { schedulePosts } = require("./scheduling");
-const { post } = require("./posting");
+const { fetchData } = require("./api");
+const { post, shouldPost } = require("./posting");
 
 const app = express();
-app.use(express.json());
 app.listen(config.port, () => {
   console.log(`✅ Server is listening on port ${config.port}.`);
 });
+
+app.use(express.json());
+app.use((req, res, next) => {
+  const allowedUserAgent = JSON.parse(process.env.ALLOWED_AGENTS);
+  if (
+    !req.headers[allowedUserAgent.field] ||
+    !req.headers[allowedUserAgent.field].includes(allowedUserAgent.value)
+  ) {
+    console.error("❌ Unauthorized access.");
+    return res.status(401).json({ error: "❌ Unauthorized access." });
+  }
+  next();
+});
+
+async function setup() {
+  console.log("☑️ Connecting to Discord...");
+  const loginSuccess = await login();
+
+  if (!loginSuccess) {
+    console.error("❌ Couldn't connect to Discord.");
+    return;
+  }
+  console.log("☑️ Running...");
+}
 
 const checkSecurityKey = (req, res, next) => {
   if (req.headers[config.postHeader] === config.postKey) {
     next();
   } else {
-    console.error("⛔ Unauthorized.");
-    res.status(401).json({ error: "⛔ Unauthorized." });
+    console.error("⛔ Unauthorized request.");
+    res.status(401).json({ error: "⛔ Unauthorized request." });
   }
 };
-
-async function main() {
-  console.error("☑️ Attempting to connect to Discord...");
-  const loginSuccess = await login();
-  if (!loginSuccess) {
-    console.error("❌ Shutting down.");
-    return;
-  } else {
-    console.log("☑️ Posting greeting...");
-    await greeting();
-  }
-
-  console.log("☑️ Scheduling posts...");
-  const schedulingSuccess = schedulePosts();
-  if (!schedulingSuccess) {
-    console.error("❌ Shutting down.");
-    return;
-  }
-
-  console.log("✅ Scheduling complete.");
-  console.log("☑️ Running...");
-}
 
 app.post("/post", checkSecurityKey, (req, res) => {
   try {
@@ -63,9 +63,29 @@ app.post("/post", checkSecurityKey, (req, res) => {
   }
 });
 
-app.all("/", (req, res) => {
-  console.log("✅ Connected.");
-  res.status(200).json({ message: "✅ Connected." });
+app.all("/", async (req, res) => {
+  console.log("✅ Received request.");
+
+  if (shouldPost()) {
+    const postData = await fetchData();
+    if (!postData) {
+      console.error("⛔ Couldn't fetch posts.");
+      res.status(500).json({ error: "⛔ Couldn't fetch posts." });
+      return;
+    }
+
+    const postSuccess = post(postData);
+    if (postSuccess) {
+      console.log("✅ Request processed.");
+      res.status(200).json({ message: "✅ Request processed." });
+    } else {
+      console.error("⛔ Request failed.");
+      res.status(500).json({ error: "⛔ Request failed." });
+    }
+  } else {
+    console.log("☑️ Not posting today.");
+    res.status(200).json({ message: "☑️ Not posting today." });
+  }
 });
 
 process.on("SIGTERM", () => {
@@ -78,4 +98,4 @@ process.on("SIGINT", () => {
   process.exit(0);
 });
 
-main();
+setup();
