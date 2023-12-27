@@ -23,8 +23,16 @@ async function shouldPost() {
     return true;
   }
 
-  const currentHour = new Date().getHours();
+  const currentHour = parseInt(
+    new Date().toLocaleString("en-US", {
+      hour: "numeric",
+      hour12: false,
+      ...{ timeZone: "America/New_York" },
+    })
+  );
+
   if (currentHour < config.startHour || currentHour > config.endHour) {
+    console.log(`☑️ Not posting at ${currentHour} hours.`);
     return false;
   }
 
@@ -46,6 +54,9 @@ async function postGap() {
       const currentDateFormatted = `${currentDate.getDate()}-${currentDate.getMonth()}-${currentDate.getFullYear()}`;
       const lastMessageDateFormatted = `${lastMessageTimestamp.getDate()}-${lastMessageTimestamp.getMonth()}-${lastMessageTimestamp.getFullYear()}`;
 
+      console.log(
+        `☑️ Comparing dates ${currentDateFormatted} vs ${lastMessageDateFormatted}.`
+      );
       return currentDateFormatted !== lastMessageDateFormatted;
     } else {
       console.log("☑️ No previous bot messages.");
