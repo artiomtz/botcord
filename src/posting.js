@@ -51,9 +51,21 @@ async function postGap() {
     if (lastMessage) {
       const currentDate = new Date();
       const lastMessageTimestamp = lastMessage.createdAt;
-      const currentDateFormatted = `${currentDate.getDate()}-${currentDate.getMonth()}-${currentDate.getFullYear()}`;
-      const lastMessageDateFormatted = `${lastMessageTimestamp.getDate()}-${lastMessageTimestamp.getMonth()}-${lastMessageTimestamp.getFullYear()}`;
-
+      const currentDateFormatted = currentDate.toLocaleString("en-US", {
+        timeZone: "America/New_York",
+        year: "numeric",
+        month: "2-digit",
+        day: "2-digit",
+      });
+      const lastMessageDateFormatted = lastMessageTimestamp.toLocaleString(
+        "en-US",
+        {
+          timeZone: "America/New_York",
+          year: "numeric",
+          month: "2-digit",
+          day: "2-digit",
+        }
+      );
       console.log(
         `☑️ Comparing dates ${currentDateFormatted} vs ${lastMessageDateFormatted}.`
       );
