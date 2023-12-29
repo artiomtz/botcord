@@ -40,7 +40,17 @@ async function shouldPost() {
   if (!dayGap) {
     return false;
   }
-  return Math.random() < config.postProbability;
+
+  const randomProbability = Math.random();
+  const shareProbability =
+    config.postProbability *
+    (config.pingFreq / (config.endHour - config.startHour));
+  console.log(
+    `☑️ Comparing probability ${randomProbability.toFixed(
+      3
+    )} < ${shareProbability.toFixed(3)}`
+  );
+  return randomProbability < shareProbability;
 }
 
 async function postGap() {
@@ -76,7 +86,7 @@ async function postGap() {
     }
   } catch {
     console.error("❌ Error fetching previous messages.");
-    return true;
+    return false;
   }
 }
 

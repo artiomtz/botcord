@@ -26,6 +26,7 @@ module.exports = {
   notificationEmail: process.env.NOTIFICATION_EMAIL,
   notificationSubject: process.env.NOTIFICATION_SUBJECT,
 
+  pingFreq: process.env.PING_FREQ,
   minDaysGap: process.env.MIN_DAYS_GAP,
   postProbability: process.env.POST_PROBABILITY,
   startHour: process.env.START_HOUR,
