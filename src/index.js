@@ -16,7 +16,11 @@ app.use((req, res, next) => {
     !req.headers[allowedUserAgent.field] ||
     !req.headers[allowedUserAgent.field].includes(allowedUserAgent.value)
   ) {
-    console.error("⛔ Unauthorized access.");
+    if (config.env === "dev") {
+      console.error(`⛔ Unauthorized access: ${JSON.stringify(req.headers)}`);
+    } else {
+      console.error("⛔ Unauthorized access.");
+    }
     return res.status(401).json({ error: "⛔ Unauthorized access." });
   }
   next();
