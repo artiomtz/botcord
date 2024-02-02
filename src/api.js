@@ -3,9 +3,9 @@ const config = require("./config");
 
 async function fetchData() {
   try {
-    data = null;
-    if (Math.random() < config.apiOverCdn) {
-      const apis = JSON.parse(config.apis);
+    let data = null;
+    if (Math.random() < config.apiOverImage) {
+      const apis = JSON.parse(config.apiPosts);
       const selectedApiIndex = Math.floor(Math.random() * apis.length);
       const selectedApi = apis[selectedApiIndex];
 
@@ -20,18 +20,42 @@ async function fetchData() {
       }
       data = extractData(response.data, selectedApi.field);
     } else {
-      const selectedCdnIndex = Math.floor(Math.random() * config.cdnNumImages);
-      const cdnUrl = config.cdnUrl + selectedCdnIndex;
-      console.log("☑️ Fetching data from CDN.");
-      data = {
-        content: "",
-        files: [
-          {
-            attachment: cdnUrl,
-            name: config.cdnPhotoName + ".jpg",
-          },
-        ],
-      };
+      const images = JSON.parse(config.imagesPosts);
+      const isPic = Math.random() < config.picOverCdn;
+
+      if (isPic) {
+        console.log("☑️ Fetching an image.");
+        const pic = images["pic"];
+        const response = await axios.get(pic.url);
+        if (response.status != 200) {
+          console.error("❌ API call failed.");
+          return null;
+        }
+        data = {
+          content: response.data[pic["caption"]],
+          files: [
+            {
+              attachment: response.data[pic["field"]],
+              name: config.cdnPhotoName + ".jpg",
+            },
+          ],
+        };
+      } else {
+        console.log("☑️ Fetching data from CDN.");
+        const selectedCdnIndex = Math.floor(
+          Math.random() * config.cdnNumImages
+        );
+        const cdnImage = images["cdn"] + selectedCdnIndex;
+        data = {
+          content: "",
+          files: [
+            {
+              attachment: cdnImage,
+              name: config.cdnPhotoName + ".jpg",
+            },
+          ],
+        };
+      }
     }
 
     if (data) {

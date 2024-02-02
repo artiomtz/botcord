@@ -18,9 +18,10 @@ module.exports = {
   postHeader: process.env.POST_SECURITY_HEADER,
   postKey: process.env.POST_SECURITY_KEY,
 
-  apis: process.env.APIS,
-  cdnUrl: process.env.CDN_URL,
-  apiOverCdn: process.env.API_OVER_CDN_PROBABILITY,
+  apiPosts: process.env.POSTS,
+  imagesPosts: process.env.IMAGES,
+  picOverCdn: process.env.PIC_OVER_CDN,
+  apiOverImage: process.env.API_OVER_IMAGE,
 
   notificationKey: process.env.NOTIFICATION_KEY,
   notificationEmail: process.env.NOTIFICATION_EMAIL,
