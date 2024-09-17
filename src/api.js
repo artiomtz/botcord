@@ -79,20 +79,34 @@ function extractData(responseData, field) {
     if (part.includes(":")) {
       const parts = part.split(":");
       const concatenatedData = parts
-        .map((part) => responseData[part])
+        .map((subPart) => getNestedValue(responseData, subPart))
         .filter((data) => data)
         .join("\n");
       if (concatenatedData) {
         return concatenatedData;
       }
     } else {
-      const data = responseData[part];
+      const data = getNestedValue(responseData, part);
       if (data) {
         return data;
       }
     }
   }
   return null;
+}
+
+function getNestedValue(object, path) {
+  const keys = path.split(".");
+  let result = object;
+
+  for (const key of keys) {
+    if (result && key in result) {
+      result = result[key];
+    } else {
+      return null;
+    }
+  }
+  return result;
 }
 
 module.exports = {
